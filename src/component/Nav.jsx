@@ -2,11 +2,11 @@ const nav = ({ products }) => {
     // get Current Product As array
     let arr = products.map((products) => products);
     // get Current Products length
-    console.log(arr.length);
+    // console.log(arr.length);
 
     return (
         <div>
-            <div className="navbar bg-base-100">
+            <div className="navbar bg-base-100 bg-transparent">
                 <div className="flex-1">
                     <a className="btn btn-ghost text-xl">Besho Market</a>
                 </div>

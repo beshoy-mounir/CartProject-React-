@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 const Total = ({ products }) => {
     // console.log(products);
-
+    let text = "Total :";
     let sum = products.map(({ items, price }) => {
         // console.log(items);
         // console.log(price);
@@ -14,10 +14,13 @@ const Total = ({ products }) => {
         total += sum[i];
     }
     // console.log(total);
-
+    if (total == 0) {
+        text = "Cart is";
+        total = "Empty";
+    }
     return (
         <div className="w-fit m-auto my-5 text-4xl font-bold">
-            Total : {total}
+            {text} {total}
         </div>
     );
 };

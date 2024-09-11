@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Nav from "./component/nav.jsx";
-import DeleteAll from "./component/DeleteAll.jsx";
+import Buttons from "./component/Buttons.jsx";
 import MainProducts from "./component/MainProducts.jsx";
 import Total from "./component/Total.jsx";
 import Market from "./component/Market.jsx";
@@ -29,6 +29,8 @@ export const App = () => {
         { id: 4, name: "kranshy", price: 400, items: 1 },
         { id: 5, name: "3aser", price: 500, items: 1 },
     ]);
+    // Dark Mode data
+    const [bgColor, setbgColor] = useState("white");
 
     // Functions
 
@@ -47,7 +49,7 @@ export const App = () => {
     const dec = (id) => {
         let newProducts = products.map((products) => {
             if (products.id === id) {
-                if (products.items !== 0) {
+                if (products.items !== 1) {
                     products.items -= 1;
                 }
             }
@@ -63,36 +65,44 @@ export const App = () => {
     };
 
     // ADD
-    const addm = (id) => {
-        // Return the Clicked Obj As Array
-        let temp = readonly.filter((i) => i.id == id);
-        // Convert Clicked Obj As Array !! to licked Obj As Obj !!
-        let addObj = temp[0];
-        //Retrun true if the element is already in cart
-        let x = products.some((i) => i.id == id);
-        // if true Skip if false Add product to cart
-        if (!x) {
-            // Save current cart to temp array
-            let tempArray = products;
-            // Added Clicked Product to to current cart (Temp Array)
-            tempArray.push(addObj);
-            // now temp Array = product + Clicked Product
-            // set current product to Temp Array
-            setitems(tempArray);
+    const addm = (sentid) => {
+        let ides = products.map(({ id }) => {
+            if (id == sentid) {
+                console.log("found");
+                inc(sentid);
+                return true;
+            }
+        });
+        if (!ides[0]) {
+            console.log("add");
+            let newProducts = products;
+            newProducts.push({ id: 6, name: "Besho", price: 500, items: 1 });
+            setitems(newProducts);
         }
     };
 
     // Delete All
 
     const deleteall = () => {
-        let newProducts = products.filter((x) => x.id == -1);
-        setitems(newProducts);
+        setitems([]);
     };
+
+    // Reset
+    const reset = () => {
+        setitems(readonly);
+    };
+
+    // daylight
+    const daylight = () => {
+        bgColor == "white" ? setbgColor("black") : setbgColor("white");
+        console.log(bgColor);
+    };
+
     return (
-        <div>
+        <div className="h-lvh">
             <Nav products={products} />
             <Market products={readonly} addm={addm} />
-            <DeleteAll deleteall={deleteall} />
+            <Buttons deleteall={deleteall} reset={reset} daylight={daylight} />
             <MainProducts products={products} inc={inc} dec={dec} dele={dele} />
             <Total products={products} />
         </div>
