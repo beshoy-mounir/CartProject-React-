@@ -66,18 +66,23 @@ export const App = () => {
 
     // ADD
     const addm = (sentid) => {
-        let ides = products.map(({ id }) => {
+        // Check if sent product is found
+        let found = products.some(({ id }) => {
             if (id == sentid) {
-                console.log("found");
                 inc(sentid);
                 return true;
             }
         });
-        if (!ides[0]) {
-            console.log("add");
-            let newProducts = products;
-            newProducts.push({ id: 6, name: "Besho", price: 500, items: 1 });
-            setitems(newProducts);
+
+        if (!found) {
+            if (!found) {
+                let newProducts = products;
+                newProducts.push(readonly[sentid - 1]);
+                console.log(typeof newProducts);
+                console.log(newProducts);
+                setitems(newProducts);
+                inc();
+            }
         }
     };
 
@@ -99,7 +104,7 @@ export const App = () => {
     };
 
     return (
-        <div className="h-lvh">
+        <div className="h-lvh " style={{ background: bgColor }}>
             <Nav products={products} />
             <Market products={readonly} addm={addm} />
             <Buttons deleteall={deleteall} reset={reset} daylight={daylight} />
